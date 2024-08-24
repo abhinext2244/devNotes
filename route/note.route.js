@@ -2,7 +2,6 @@ import express from 'express'
 import { noteModel}  from '../Model/note.model.js'
 const noteRouter=express.Router()
 noteRouter.post("/create",async(req,res)=>{
-  
  const {title,content,status}=req.body
  const UserId=req.user._id
  if (!UserId) {
@@ -39,7 +38,6 @@ noteRouter.patch("/update/:id",async(req,res)=>{
     try {
         const notes=await noteModel.findOne({_id:noteId})
         if(notes.UserId.toString()==UserId.toString()){
-            console.log(notes.UserId,UserId)
             await noteModel.findByIdAndUpdate({_id:noteId},payload)
           return  res.status(201).json({msg:"note update successfully"})
         }else{
@@ -54,17 +52,14 @@ noteRouter.delete("/delete/:id",async(req,res)=>{
     const payload=req.body
     const noteId=req.params.id
     const UserId=req.user._id
-
        try {
            const notes=await noteModel.findOne({_id:noteId})
            if(notes.UserId.toString()==UserId.toString()){
-            
                await noteModel.findByIdAndDelete({_id:noteId},payload)
              return  res.status(201).json({msg:"note delete successfully"})
            }else{
                return res.status(401).json({message:"unauthorized"})
            }
-           
        } catch (error) {
            res.status(500).json({"msg":"Error while deleting notes",error})
        }

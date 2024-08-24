@@ -14,7 +14,9 @@ app.use(cors({
 app.use(express.json())
 app.use("/user",userRouter)
 app.use("/note",auth,noteRouter)
-
+app.get("/",(req,res)=>{
+    return res.send("<h1>server is running</h1>")
+})
 app.listen(PORT,async()=>{
     try {
         await connection

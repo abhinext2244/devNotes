@@ -24,7 +24,7 @@ noteRouter.get("/",async(req,res)=>{
     const UserId=req.user._id
     try {
         const notes=await noteModel.find({UserId})
-        return res.send("<h1>server is running</h1>")
+    
         res.status(201).json({notes})
         
     } catch (error) {

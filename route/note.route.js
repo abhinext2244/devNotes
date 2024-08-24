@@ -2,7 +2,7 @@ import express from 'express'
 import { noteModel}  from '../Model/note.model.js'
 const noteRouter=express.Router()
 noteRouter.post("/create",async(req,res)=>{
-    console.log("req user",req.user,"req body",req.body)
+  
  const {title,content,status}=req.body
  const UserId=req.user._id
  if (!UserId) {
@@ -35,7 +35,7 @@ noteRouter.patch("/update/:id",async(req,res)=>{
  const payload=req.body
  const noteId=req.params.id
  const UserId=req.user._id
-//  console.log(payload, noteId,UserId)
+
     try {
         const notes=await noteModel.findOne({_id:noteId})
         if(notes.UserId.toString()==UserId.toString()){
@@ -54,11 +54,11 @@ noteRouter.delete("/delete/:id",async(req,res)=>{
     const payload=req.body
     const noteId=req.params.id
     const UserId=req.user._id
-    // console.log(payload, noteId,UserId)
+
        try {
            const notes=await noteModel.findOne({_id:noteId})
            if(notes.UserId.toString()==UserId.toString()){
-               console.log(notes.UserId,UserId)
+            
                await noteModel.findByIdAndDelete({_id:noteId},payload)
              return  res.status(201).json({msg:"note delete successfully"})
            }else{

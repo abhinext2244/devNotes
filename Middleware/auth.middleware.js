@@ -16,7 +16,7 @@ try {
     const user= await userModel.findById(decoded.id)
     req.user=user
     next()
-} catch (error) {
+} catch (err) {
     res.status(401).json({msg:"invalid token"})
 }
 }
